@@ -100,5 +100,79 @@ body{
   </div>
 </nav>
 
+<!-- KATEGORI GRID -->
+<section class="pb-5">
+<div class="container">
+<div class="row g-4">
+
+    <div class="col-md-3">
+        <div class="katalog-card">
+            <div class="icon bg-soft-green">🧪</div>
+            <h6>Sains & Alam</h6>
+            <small class="text-muted">3.200 Buku</small>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="katalog-card">
+            <div class="icon bg-soft-yellow">🏛️</div>
+            <h6>Sejarah</h6>
+            <small class="text-muted">1.800 Buku</small>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="katalog-card">
+            <div class="icon bg-soft-purple">📖</div>
+            <h6>Sastra & Novel</h6>
+            <small class="text-muted">5.400 Buku</small>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="katalog-card">
+            <div class="icon bg-soft-cyan">💻</div>
+            <h6>Teknologi</h6>
+            <small class="text-muted">2.900 Buku</small>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="katalog-card">
+            <div class="icon bg-soft-red">❤️</div>
+            <h6>Psikologi</h6>
+            <small class="text-muted">1.500 Buku</small>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="katalog-card">
+            <div class="icon bg-soft-blue">🌍</div>
+            <h6>Sosial & Budaya</h6>
+            <small class="text-muted">2.100 Buku</small>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="katalog-card">
+            <div class="icon bg-soft-yellow">🧮</div>
+            <h6>Matematika</h6>
+            <small class="text-muted">1.200 Buku</small>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="katalog-card">
+            <div class="icon bg-soft-pink">🎨</div>
+            <h6>Seni & Desain</h6>
+            <small class="text-muted">980 Buku</small>
+        </div>
+    </div>
+
+</div>
+</div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
