@@ -5,7 +5,7 @@
 session_start();
 
 if (empty($_SESSION['username']) || $_SESSION['role'] != 'admin') {
-    header("location: index.php");
+    header('Location: index.php');
     exit();
 }
 

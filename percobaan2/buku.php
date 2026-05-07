@@ -2,15 +2,13 @@
 // =============================================
 // BUKU.PHP - Koleksi & Pencarian Buku
 // Modul 5 : Query SELECT + Modul 3 : GET POST
-// =============================================
 session_start();
+include 'koneksi.php';
 
 if (empty($_SESSION['username'])) {
-    header("location: index.php?pesan=belum_login");
+    header('Location: index.php?pesan=belum_login');
     exit();
 }
-
-include 'koneksi.php';
 
 // Pencarian buku - Modul 3 : Menerima input dari user (GET)
 $cari  = isset($_GET['cari'])  ? $_GET['cari']  : '';
@@ -61,10 +59,10 @@ include 'header.php';
                         <select name="kategori">
                             <option value="">— Semua Kategori —</option>
                             <?php
-                            // Modul 4 : Perulangan FOR untuk menampilkan array
                             for ($i = 0; $i < count($kategori_list); $i++) {
-                                $selected = ($kategori_filter == $kategori_list[$i]) ? 'selected' : '';
-                                echo "<option value='{$kategori_list[$i]}' $selected>{$kategori_list[$i]}</option>";
+                                $kat = $kategori_list[$i];
+                                $sel = ($kategori_filter == $kat) ? 'selected' : '';
+                                echo "<option value='$kat' $sel>$kat</option>";
                             }
                             ?>
                         </select>
@@ -153,8 +151,4 @@ include 'header.php';
 
 </div>
 
-<div class="footer">
-    &copy; <?php echo date('Y'); ?> Perpustakaan Digital — Prodi Teknik Informatika UPN "Veteran" Yogyakarta
-</div>
-</body>
-</html>
+<?php include 'footer.php'; ?>

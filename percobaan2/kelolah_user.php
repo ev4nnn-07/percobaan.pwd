@@ -4,13 +4,12 @@
 // Modul 7 : Akses Database + Modul 6 : Session
 // =============================================
 session_start();
+include 'koneksi.php';
 
 if (empty($_SESSION['username']) || $_SESSION['role'] != 'admin') {
-    header("location: index.php");
+    header('Location: index.php');
     exit();
 }
-
-include 'koneksi.php';
 
 $pesan = "";
 $tipe  = "";

@@ -4,19 +4,16 @@
 // Modul 5 : INSERT ke database + Modul 6 : Session
 // =============================================
 session_start();
+include 'koneksi.php';
 
 if (empty($_SESSION['username'])) {
-    header("location: index.php?pesan=belum_login");
+    header('Location: index.php?pesan=belum_login');
     exit();
 }
-
-// Hanya user yang bisa akses - Modul 4 : Percabangan
 if ($_SESSION['role'] != 'user') {
-    header("location: dashboard.php");
+    header('Location: dashboard.php');
     exit();
 }
-
-include 'koneksi.php';
 
 $id_user = $_SESSION['id_user'];
 $pesan   = "";
@@ -197,8 +194,4 @@ include 'header.php';
     </div>
 </div>
 
-<div class="footer">
-    &copy; <?php echo date('Y'); ?> Perpustakaan Digital — Prodi Teknik Informatika UPN "Veteran" Yogyakarta
-</div>
-</body>
-</html>
+<?php include 'footer.php'; ?>

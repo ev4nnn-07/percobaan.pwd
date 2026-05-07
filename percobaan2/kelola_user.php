@@ -4,13 +4,12 @@
 // Modul 7 : Akses Database + Modul 6 : Session
 // =============================================
 session_start();
+include 'koneksi.php';
 
 if (empty($_SESSION['username']) || $_SESSION['role'] != 'admin') {
-    header("location: index.php");
+    header('Location: index.php');
     exit();
 }
-
-include 'koneksi.php';
 
 $pesan = "";
 $tipe  = "";
@@ -181,8 +180,4 @@ include 'header.php';
     </div>
 </div>
 
-<div class="footer">
-    &copy; <?php echo date('Y'); ?> Perpustakaan Digital — Prodi Teknik Informatika UPN "Veteran" Yogyakarta
-</div>
-</body>
-</html>
+<?php include 'footer.php'; ?>

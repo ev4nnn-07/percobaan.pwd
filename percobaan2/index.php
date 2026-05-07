@@ -3,14 +3,13 @@
 // INDEX.PHP / LOGIN - Modul 6 : Session
 // =============================================
 session_start();
+include 'koneksi.php';
 
 // Jika sudah login, langsung ke dashboard
 if (isset($_SESSION['username'])) {
-    header("location: dashboard.php");
+    header('Location: dashboard.php');
     exit();
 }
-
-include 'koneksi.php';
 
 $pesan = "";
 
@@ -58,12 +57,6 @@ if (isset($_POST['submit'])) {
         <?php if ($pesan != "") { ?>
             <div class="alert alert-danger">⚠️ <?php echo $pesan; ?></div>
         <?php } ?>
-
-        <div class="demo-info">
-            <strong>Akun Demo:</strong><br>
-            Admin: <strong>admin</strong> / admin123<br>
-            User: <strong>budi</strong> / budi123
-        </div>
 
         <form method="POST" action="index.php">
             <div class="form-group">

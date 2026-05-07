@@ -3,14 +3,12 @@
 // DASHBOARD.PHP - Modul 6 : Session + Modul 7 : Akses Database
 // =============================================
 session_start();
+include 'koneksi.php';
 
-// Cek session - Modul 6
 if (empty($_SESSION['username'])) {
-    header("location: index.php?pesan=belum_login");
+    header('Location: index.php?pesan=belum_login');
     exit();
 }
-
-include 'koneksi.php';
 
 // Ambil data statistik - Modul 7 : Query SELECT
 $total_buku     = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM buku"));
@@ -248,9 +246,4 @@ include 'header.php';
 
 </div>
 
-<div class="footer">
-    &copy; <?php echo date('Y'); ?> Perpustakaan Digital — Prodi Teknik Informatika UPN "Veteran" Yogyakarta
-</div>
-
-</body>
-</html>
+<?php include 'footer.php'; ?>

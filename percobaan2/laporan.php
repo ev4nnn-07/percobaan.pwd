@@ -4,13 +4,12 @@
 // Modul 7 : Akses Database SELECT JOIN
 // =============================================
 session_start();
+include 'koneksi.php';
 
 if (empty($_SESSION['username']) || $_SESSION['role'] != 'admin') {
-    header("location: index.php");
+    header('Location: index.php');
     exit();
 }
-
-include 'koneksi.php';
 
 // Filter status - Modul 4 : Percabangan
 $filter_status = isset($_GET['status']) ? $_GET['status'] : '';
@@ -97,11 +96,11 @@ include 'header.php';
                         <select name="user">
                             <option value="">— Semua Peminjam —</option>
                             <?php while ($u = mysqli_fetch_array($query_user_list)) { ?>
-                                <option value="<?php echo $u['id']; ?>"
-                                    <?php if ($filter_user == $u['id']) echo 'selected'; ?>>
+                                <option value="<?php echo $u['id']; ?>" <?php if ($filter_user == $u['id']) echo 'selected'; ?> >
                                     <?php echo $u['nama']; ?>
                                 </option>
                             <?php } ?>
+                            
                         </select>
                     </div>
                 </div>
@@ -146,16 +145,10 @@ include 'header.php';
                 while ($data = mysqli_fetch_array($query_laporan)) {
                     $ada = true;
 
-                    // Modul 4 : Switch-case untuk badge status
-                    switch ($data['status']) {
-                        case 'dipinjam':
-                            $badge = '<span class="badge badge-merah">📤 Dipinjam</span>';
-                            break;
-                        case 'dikembalikan':
-                            $badge = '<span class="badge badge-hijau">✅ Kembali</span>';
-                            break;
-                        default:
-                            $badge = '<span class="badge">' . $data['status'] . '</span>';
+                    if ($data['status'] == 'dipinjam') {
+                        $badge = '<span class="badge badge-merah">📤 Dipinjam</span>';
+                    } else {
+                        $badge = '<span class="badge badge-hijau">✅ Kembali</span>';
                     }
                 ?>
                     <tr>
@@ -199,8 +192,4 @@ include 'header.php';
 
 </div>
 
-<div class="footer">
-    &copy; <?php echo date('Y'); ?> Perpustakaan Digital — Prodi Teknik Informatika UPN "Veteran" Yogyakarta
-</div>
-</body>
-</html>
+<?php include 'footer.php'; ?>

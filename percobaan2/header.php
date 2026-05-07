@@ -21,18 +21,18 @@
     </a>
 
     <ul class="navbar-menu">
-        <li><a href="dashboard.php" <?php if(basename($_SERVER['PHP_SELF'])=='dashboard.php') echo 'class="aktif"'; ?>>🏠 Dashboard</a></li>
-        <li><a href="buku.php" <?php if(basename($_SERVER['PHP_SELF'])=='buku.php') echo 'class="aktif"'; ?>>📖 Koleksi Buku</a></li>
+        <li><a href="dashboard.php" <?php if (basename($_SERVER['PHP_SELF']) == 'dashboard.php') echo 'class="aktif"'; ?>>🏠 Dashboard</a></li>
+        <li><a href="buku.php" <?php if (basename($_SERVER['PHP_SELF']) == 'buku.php') echo 'class="aktif"'; ?>>📖 Koleksi Buku</a></li>
 
         <?php if ($_SESSION['role'] == 'user') { ?>
-            <li><a href="pinjam.php" <?php if(basename($_SERVER['PHP_SELF'])=='pinjam.php') echo 'class="aktif"'; ?>>📤 Pinjam Buku</a></li>
-            <li><a href="riwayat.php" <?php if(basename($_SERVER['PHP_SELF'])=='riwayat.php') echo 'class="aktif"'; ?>>📋 Riwayat</a></li>
+            <li><a href="pinjam.php" <?php if (basename($_SERVER['PHP_SELF']) == 'pinjam.php') echo 'class="aktif"'; ?>>📤 Pinjam Buku</a></li>
+            <li><a href="riwayat.php" <?php if (basename($_SERVER['PHP_SELF']) == 'riwayat.php') echo 'class="aktif"'; ?>>📋 Riwayat</a></li>
         <?php } ?>
 
         <?php if ($_SESSION['role'] == 'admin') { ?>
-            <li><a href="kelola_buku.php" <?php if(basename($_SERVER['PHP_SELF'])=='kelola_buku.php') echo 'class="aktif"'; ?>>⚙️ Kelola Buku</a></li>
-            <li><a href="kelola_user.php" <?php if(basename($_SERVER['PHP_SELF'])=='kelola_user.php') echo 'class="aktif"'; ?>>👥 Kelola User</a></li>
-            <li><a href="laporan.php" <?php if(basename($_SERVER['PHP_SELF'])=='laporan.php') echo 'class="aktif"'; ?>>📊 Laporan</a></li>
+            <li><a href="kelola_buku.php" <?php if (basename($_SERVER['PHP_SELF']) == 'kelola_buku.php') echo 'class="aktif"'; ?>>⚙️ Kelola Buku</a></li>
+            <li><a href="kelola_user.php" <?php if (basename($_SERVER['PHP_SELF']) == 'kelola_user.php') echo 'class="aktif"'; ?>>👥 Kelola User</a></li>
+            <li><a href="laporan.php" <?php if (basename($_SERVER['PHP_SELF']) == 'laporan.php') echo 'class="aktif"'; ?>>📊 Laporan</a></li>
         <?php } ?>
     </ul>
 

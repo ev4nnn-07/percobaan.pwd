@@ -4,8 +4,6 @@
 // =============================================
 session_start();
 session_destroy(); // Menghapus semua session
-
-// Redirect ke halaman login
-header("location: index.php?pesan=logout");
+header('Location: index.php?pesan=logout');
 exit();
 ?>

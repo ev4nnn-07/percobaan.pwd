@@ -4,18 +4,16 @@
 // Modul 7 : Akses Database SELECT
 // =============================================
 session_start();
+include 'koneksi.php';
 
 if (empty($_SESSION['username'])) {
-    header("location: index.php");
+    header('Location: index.php?pesan=belum_login');
     exit();
 }
-
 if ($_SESSION['role'] != 'user') {
-    header("location: dashboard.php");
+    header('Location: dashboard.php');
     exit();
 }
-
-include 'koneksi.php';
 
 $id_user = $_SESSION['id_user'];
 $pesan_url = isset($_GET['pesan']) ? $_GET['pesan'] : '';
@@ -100,14 +98,13 @@ include 'header.php';
                 while ($data = mysqli_fetch_array($query_riwayat)) {
                     $ada = true;
 
-                    // Modul 4 : Percabangan untuk status
                     if ($data['status'] == 'dipinjam') {
-                        $badge  = '<span class="badge badge-merah">📤 Dipinjam</span>';
+                        $badge = '<span class="badge badge-merah">📤 Dipinjam</span>';
                         $tombol = '<a href="kembalikan.php?id=' . $data['id_pinjam'] . '"
                                      onclick="return confirm(\'Kembalikan buku ini?\')"
                                      class="btn btn-sm btn-primary">↩️ Kembalikan</a>';
                     } else {
-                        $badge  = '<span class="badge badge-hijau">✅ Kembali</span>';
+                        $badge = '<span class="badge badge-hijau">✅ Kembali</span>';
                         $tombol = '<span style="color:var(--teks-abu); font-size:0.8rem;">—</span>';
                     }
                 ?>
@@ -141,8 +138,4 @@ include 'header.php';
 
 </div>
 
-<div class="footer">
-    &copy; <?php echo date('Y'); ?> Perpustakaan Digital — Prodi Teknik Informatika UPN "Veteran" Yogyakarta
-</div>
-</body>
-</html>
+<?php include 'footer.php'; ?>

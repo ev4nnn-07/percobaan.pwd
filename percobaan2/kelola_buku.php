@@ -4,19 +4,12 @@
 // Modul 7 : Akses Database CRUD
 // =============================================
 session_start();
-
-if (empty($_SESSION['username'])) {
-    header("location: index.php");
-    exit();
-}
-
-// Hanya admin - Modul 4 : Percabangan
-if ($_SESSION['role'] != 'admin') {
-    header("location: dashboard.php");
-    exit();
-}
-
 include 'koneksi.php';
+
+if (empty($_SESSION['username']) || $_SESSION['role'] != 'admin') {
+    header('Location: index.php');
+    exit();
+}
 
 $pesan = "";
 $tipe  = "";
@@ -162,10 +155,10 @@ include 'header.php';
                         <select name="kategori" required>
                             <option value="">— Pilih Kategori —</option>
                             <?php
-                            // Modul 4 : Perulangan FOR dengan Array
                             for ($i = 0; $i < count($kategori_tersedia); $i++) {
                                 $kat = $kategori_tersedia[$i];
-                                $sel = ($data_edit && $data_edit['kategori'] == $kat) ? 'selected' : '';
+                                $current = $data_edit ? $data_edit['kategori'] : '';
+                                $sel = ($current == $kat) ? 'selected' : '';
                                 echo "<option value='$kat' $sel>$kat</option>";
                             }
                             ?>
@@ -265,8 +258,4 @@ include 'header.php';
     </div>
 </div>
 
-<div class="footer">
-    &copy; <?php echo date('Y'); ?> Perpustakaan Digital — Prodi Teknik Informatika UPN "Veteran" Yogyakarta
-</div>
-</body>
-</html>
+<?php include 'footer.php'; ?>
