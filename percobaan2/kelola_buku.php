@@ -1,8 +1,4 @@
 <?php
-// =============================================
-// KELOLA_BUKU.PHP - CRUD Buku (Admin only)
-// Modul 7 : Akses Database CRUD
-// =============================================
 session_start();
 include 'koneksi.php';
 
@@ -16,7 +12,6 @@ $tipe  = "";
 $mode  = isset($_GET['edit']) ? 'edit' : 'tambah';
 $id_edit = isset($_GET['edit']) ? $_GET['edit'] : '';
 
-// PROSES TAMBAH BUKU - Modul 5 : INSERT
 if (isset($_POST['submit_tambah'])) {
     $judul        = $_POST['judul'];
     $pengarang    = $_POST['pengarang'];
@@ -39,7 +34,6 @@ if (isset($_POST['submit_tambah'])) {
     }
 }
 
-// PROSES EDIT BUKU - Modul 5 : UPDATE
 if (isset($_POST['submit_edit'])) {
     $id_buku      = $_POST['id_buku'];
     $judul        = $_POST['judul'];
@@ -71,17 +65,14 @@ if (isset($_POST['submit_edit'])) {
     }
 }
 
-// Ambil data buku untuk diedit
 $data_edit = null;
 if ($id_edit != '') {
     $q_edit   = mysqli_query($konek, "SELECT * FROM buku WHERE id_buku='$id_edit'");
     $data_edit = mysqli_fetch_array($q_edit);
 }
 
-// Ambil semua buku
 $query_buku = mysqli_query($konek, "SELECT * FROM buku ORDER BY judul ASC");
 
-// Array kategori tersedia - Modul 4 : Array
 $kategori_tersedia = array('Teknologi', 'Ilmu Komputer', 'Matematika', 'Sastra', 'Novel', 'Sejarah', 'Sains', 'Lainnya');
 
 $judul_halaman = "Kelola Buku - Perpustakaan Digital";
@@ -103,7 +94,6 @@ include 'header.php';
 
     <div style="display:grid; grid-template-columns: 380px 1fr; gap: 24px; align-items: start;">
 
-        <!-- FORM TAMBAH/EDIT BUKU -->
         <div class="card" style="position:sticky; top:90px;">
             <div class="card-header">
                 <?php echo ($mode == 'edit') ? '✏️ Edit Buku' : '➕ Tambah Buku Baru'; ?>
@@ -181,7 +171,6 @@ include 'header.php';
             </div>
         </div>
 
-        <!-- DAFTAR BUKU -->
         <div class="card">
             <div class="card-header flex-between" style="display:flex; align-items:center; justify-content:space-between;">
                 <span>📚 Daftar Koleksi Buku</span>
@@ -208,11 +197,9 @@ include 'header.php';
                     $no = 1;
                     $ada = false;
 
-                    // Modul 4 : Perulangan WHILE + Percabangan
                     while ($buku = mysqli_fetch_array($query_buku)) {
                         $ada = true;
 
-                        // Warna badge stok
                         if ($buku['stok'] > 3) {
                             $stok_badge = 'badge-hijau';
                         } elseif ($buku['stok'] > 0) {

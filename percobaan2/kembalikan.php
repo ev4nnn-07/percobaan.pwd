@@ -1,7 +1,4 @@
 <?php
-// =============================================
-// KEMBALIKAN.PHP - Modul 5 : UPDATE database
-// =============================================
 session_start();
 
 if (empty($_SESSION['username'])) {
@@ -14,7 +11,6 @@ include 'koneksi.php';
 $id_pinjam = $_GET['id'];
 $id_user   = $_SESSION['id_user'];
 
-// Verifikasi bahwa peminjaman ini milik user ini (atau admin)
 if ($_SESSION['role'] == 'user') {
     $cek = mysqli_query($konek, "SELECT * FROM peminjaman WHERE id_pinjam='$id_pinjam' AND id_user='$id_user'");
 } else {
@@ -25,10 +21,8 @@ if (mysqli_num_rows($cek) > 0) {
     $data_pinjam = mysqli_fetch_array($cek);
     $id_buku     = $data_pinjam['id_buku'];
 
-    // UPDATE status peminjaman - Modul 5 : UPDATE
     mysqli_query($konek, "UPDATE peminjaman SET status='dikembalikan' WHERE id_pinjam='$id_pinjam'");
 
-    // Tambah kembali stok buku
     mysqli_query($konek, "UPDATE buku SET stok = stok + 1 WHERE id_buku='$id_buku'");
 
     header("location: riwayat.php?pesan=berhasil_kembali");

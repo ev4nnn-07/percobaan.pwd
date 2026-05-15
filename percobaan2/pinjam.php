@@ -1,8 +1,4 @@
 <?php
-// =============================================
-// PINJAM.PHP - Peminjaman Buku (User only)
-// Modul 5 : INSERT ke database + Modul 6 : Session
-// =============================================
 session_start();
 include 'koneksi.php';
 
@@ -19,19 +15,15 @@ $id_user = $_SESSION['id_user'];
 $pesan   = "";
 $tipe    = "";
 
-// Ambil id buku dari URL jika ada - Modul 3 : GET
 $id_buku_pilih = isset($_GET['id']) ? $_GET['id'] : '';
 
-// Proses peminjaman - Modul 5 : INSERT
 if (isset($_POST['submit_pinjam'])) {
     $id_buku    = $_POST['id_buku'];
     $tgl_pinjam = $_POST['tgl_pinjam'];
     $tgl_kembali = $_POST['tgl_kembali'];
 
-    // Cek stok buku
     $cek_stok = mysqli_query($konek, "SELECT * FROM buku WHERE id_buku='$id_buku' AND stok > 0");
 
-    // Cek apakah user sudah meminjam buku yang sama
     $cek_duplikat = mysqli_query($konek, "SELECT * FROM peminjaman WHERE id_user='$id_user' AND id_buku='$id_buku' AND status='dipinjam'");
 
     if (mysqli_num_rows($cek_duplikat) > 0) {
@@ -41,14 +33,12 @@ if (isset($_POST['submit_pinjam'])) {
         $pesan = "Maaf, stok buku ini sudah habis!";
         $tipe  = "danger";
     } else {
-        // INSERT peminjaman - Modul 5
         $query_insert = mysqli_query($konek,
             "INSERT INTO peminjaman (id_user, id_buku, tgl_pinjam, tgl_kembali, status)
              VALUES ('$id_user', '$id_buku', '$tgl_pinjam', '$tgl_kembali', 'dipinjam')"
         );
 
         if ($query_insert) {
-            // Kurangi stok buku - Modul 5 : UPDATE
             mysqli_query($konek, "UPDATE buku SET stok = stok - 1 WHERE id_buku='$id_buku'");
             $pesan = "Berhasil meminjam buku! Jangan lupa kembalikan sebelum " . $tgl_kembali;
             $tipe  = "success";
@@ -59,10 +49,8 @@ if (isset($_POST['submit_pinjam'])) {
     }
 }
 
-// Ambil semua buku tersedia
 $query_buku = mysqli_query($konek, "SELECT * FROM buku WHERE stok > 0 ORDER BY judul ASC");
 
-// Jika ada buku dipilih
 $buku_dipilih = null;
 if ($id_buku_pilih != '') {
     $q = mysqli_query($konek, "SELECT * FROM buku WHERE id_buku='$id_buku_pilih'");
@@ -88,7 +76,6 @@ include 'header.php';
 
     <div style="display:grid; grid-template-columns: 1fr 340px; gap: 24px;">
 
-        <!-- FORM PINJAM -->
         <div class="card">
             <div class="card-header">📋 Form Peminjaman Buku</div>
             <div class="card-body">
@@ -98,7 +85,6 @@ include 'header.php';
                         <select name="id_buku" required>
                             <option value="">— Pilih Buku —</option>
                             <?php
-                            // Modul 4 : Perulangan WHILE
                             while ($buku = mysqli_fetch_array($query_buku)) {
                                 $selected = ($buku_dipilih && $buku['id_buku'] == $buku_dipilih['id_buku']) ? 'selected' : '';
                                 echo "<option value='{$buku['id_buku']}' $selected>
@@ -135,7 +121,6 @@ include 'header.php';
             </div>
         </div>
 
-        <!-- INFO PEMINJAMAN AKTIF SAYA -->
         <div>
             <div class="card">
                 <div class="card-header">📋 Sedang Saya Pinjam</div>
@@ -149,7 +134,6 @@ include 'header.php';
                     ");
                     $ada = false;
 
-                    // Modul 4 : Perulangan WHILE
                     while ($dp = mysqli_fetch_array($q_aktif)) {
                         $ada = true;
                     ?>

@@ -1,7 +1,4 @@
 <?php
-// =============================================
-// DASHBOARD.PHP - Modul 6 : Session + Modul 7 : Akses Database
-// =============================================
 session_start();
 include 'koneksi.php';
 
@@ -10,16 +7,13 @@ if (empty($_SESSION['username'])) {
     exit();
 }
 
-// Ambil data statistik - Modul 7 : Query SELECT
 $total_buku     = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM buku"));
 $total_user     = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM users WHERE role='user'"));
 $sedang_pinjam  = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM peminjaman WHERE status='dipinjam'"));
 $total_kembali  = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM peminjaman WHERE status='dikembalikan'"));
 
-// Buku terbaru
 $query_buku_baru = mysqli_query($konek, "SELECT * FROM buku ORDER BY id_buku DESC LIMIT 5");
 
-// Peminjaman terbaru (untuk admin)
 $query_pinjam_baru = mysqli_query($konek, "
     SELECT p.*, u.nama as nama_user, b.judul as judul_buku
     FROM peminjaman p
@@ -28,7 +22,6 @@ $query_pinjam_baru = mysqli_query($konek, "
     ORDER BY p.id_pinjam DESC LIMIT 5
 ");
 
-// Peminjaman user ini (untuk user)
 if ($_SESSION['role'] == 'user') {
     $id_user = $_SESSION['id_user'];
     $query_pinjam_saya = mysqli_query($konek, "
@@ -44,12 +37,10 @@ $judul_halaman = "Dashboard - Perpustakaan Digital";
 include 'header.php';
 ?>
 
-<!-- HERO SECTION -->
 <div class="page-hero">
     <h1>Selamat Datang, <?php echo $_SESSION['nama']; ?>! 👋</h1>
     <p>
         <?php
-        // Modul 4 : Percabangan
         if ($_SESSION['role'] == 'admin') {
             echo "Panel Admin — Kelola seluruh sistem perpustakaan digital.";
         } else {
@@ -61,7 +52,6 @@ include 'header.php';
 
 <div class="container fade-in">
 
-    <!-- STATISTIK - Modul 4 : Array (data statistik) -->
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-icon">📚</div>
@@ -93,10 +83,8 @@ include 'header.php';
         </div>
     </div>
 
-    <!-- KONTEN BERDASARKAN ROLE - Modul 4 : Percabangan IF-ELSE -->
     <?php if ($_SESSION['role'] == 'admin') { ?>
 
-        <!-- ADMIN: TABEL PEMINJAMAN TERBARU -->
         <div class="card mb-20">
             <div class="card-header">📋 Peminjaman Terbaru</div>
             <div class="card-body">
@@ -116,10 +104,8 @@ include 'header.php';
                     <tbody>
                     <?php
                     $no = 1;
-                    // Modul 4 : Perulangan WHILE
                     while ($data = mysqli_fetch_array($query_pinjam_baru)) {
                         $ada_data = true;
-                        // Modul 4 : Percabangan untuk badge
                         if ($data['status'] == 'dipinjam') {
                             $badge = '<span class="badge badge-merah">Dipinjam</span>';
                         } else {
@@ -149,7 +135,6 @@ include 'header.php';
 
     <?php } else { ?>
 
-        <!-- USER: BUKU YANG SEDANG DIPINJAM -->
         <div class="card mb-20">
             <div class="card-header">📤 Buku yang Sedang Saya Pinjam</div>
             <div class="card-body">
@@ -204,18 +189,15 @@ include 'header.php';
 
     <?php } ?>
 
-    <!-- BUKU TERBARU MASUK -->
     <div class="card">
         <div class="card-header">🆕 Koleksi Buku Terbaru</div>
         <div class="card-body">
             <div class="buku-grid">
             <?php
-            // Modul 4 : Array warna cover - menggunakan array
             $warna_cover = array('', 'buku-cover-coklat', 'buku-cover-biru', 'buku-cover-ungu', '');
             $emoji_buku  = array('📘', '📗', '📕', '📙', '📓');
             $i = 0;
 
-            // Modul 4 : Perulangan WHILE
             while ($buku = mysqli_fetch_array($query_buku_baru)) {
                 $cover_class = $warna_cover[$i % 5];
                 $emoji = $emoji_buku[$i % 5];

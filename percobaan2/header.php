@@ -1,8 +1,4 @@
 <?php
-// =============================================
-// HEADER.PHP - Template Header (Modul 1 HTML + Modul 2 CSS)
-// Diinclude di setiap halaman (seperti konsep include PHP)
-// =============================================
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -14,7 +10,6 @@
 </head>
 <body>
 
-<!-- NAVBAR - Modul 1 : HTML Structure -->
 <nav class="navbar">
     <a href="dashboard.php" class="navbar-brand">
         📚 <span>Pustaka</span>Digital

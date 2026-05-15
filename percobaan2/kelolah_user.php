@@ -1,8 +1,4 @@
 <?php
-// =============================================
-// KELOLA_USER.PHP - CRUD User (Admin only)
-// Modul 7 : Akses Database + Modul 6 : Session
-// =============================================
 session_start();
 include 'koneksi.php';
 
@@ -14,7 +10,6 @@ if (empty($_SESSION['username']) || $_SESSION['role'] != 'admin') {
 $pesan = "";
 $tipe  = "";
 
-// PROSES TAMBAH USER - Modul 5 : INSERT
 if (isset($_POST['submit_tambah'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -23,7 +18,6 @@ if (isset($_POST['submit_tambah'])) {
     $role     = $_POST['role'];
     $tgl      = date('Y-m-d');
 
-    // Cek apakah username sudah ada - Modul 7 : SELECT
     $cek = mysqli_query($konek, "SELECT * FROM users WHERE username='$username'");
 
     if (mysqli_num_rows($cek) > 0) {
@@ -45,10 +39,8 @@ if (isset($_POST['submit_tambah'])) {
     }
 }
 
-// PROSES HAPUS USER - Modul 5 : DELETE
 if (isset($_GET['hapus'])) {
     $id_hapus = $_GET['hapus'];
-    // Jangan hapus diri sendiri
     if ($id_hapus != $_SESSION['id_user']) {
         mysqli_query($konek, "DELETE FROM users WHERE id='$id_hapus'");
         $pesan = "User berhasil dihapus.";
@@ -59,7 +51,6 @@ if (isset($_GET['hapus'])) {
     }
 }
 
-// Ambil semua user - Modul 7 : SELECT
 $query_users = mysqli_query($konek, "SELECT * FROM users ORDER BY role ASC, nama ASC");
 
 $judul_halaman = "Kelola User - Perpustakaan Digital";
@@ -81,7 +72,6 @@ include 'header.php';
 
     <div style="display:grid; grid-template-columns: 340px 1fr; gap: 24px; align-items: start;">
 
-        <!-- FORM TAMBAH USER -->
         <div class="card" style="position:sticky; top:90px;">
             <div class="card-header">➕ Tambah Pengguna Baru</div>
             <div class="card-body">
@@ -116,7 +106,6 @@ include 'header.php';
             </div>
         </div>
 
-        <!-- DAFTAR USER -->
         <div class="card">
             <div class="card-header">📋 Daftar Pengguna Terdaftar</div>
             <div class="card-body" style="padding:0;">
@@ -138,18 +127,15 @@ include 'header.php';
                     $no = 1;
                     $ada = false;
 
-                    // Modul 4 : Perulangan WHILE
                     while ($user = mysqli_fetch_array($query_users)) {
                         $ada = true;
 
-                        // Modul 4 : Percabangan untuk badge role
                         if ($user['role'] == 'admin') {
                             $role_badge = '<span class="badge badge-hijau">🔑 Admin</span>';
                         } else {
                             $role_badge = '<span class="badge badge-biru">👤 User</span>';
                         }
 
-                        // Tombol hapus (tidak bisa hapus diri sendiri)
                         if ($user['id'] != $_SESSION['id_user']) {
                             $tombol_hapus = '<a href="kelola_user.php?hapus=' . $user['id'] . '"
                                              onclick="return confirm(\'Hapus user ' . $user['nama'] . '?\')"

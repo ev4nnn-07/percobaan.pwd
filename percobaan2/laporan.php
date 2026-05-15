@@ -1,8 +1,4 @@
 <?php
-// =============================================
-// LAPORAN.PHP - Laporan Peminjaman (Admin only)
-// Modul 7 : Akses Database SELECT JOIN
-// =============================================
 session_start();
 include 'koneksi.php';
 
@@ -11,7 +7,6 @@ if (empty($_SESSION['username']) || $_SESSION['role'] != 'admin') {
     exit();
 }
 
-// Filter status - Modul 4 : Percabangan
 $filter_status = isset($_GET['status']) ? $_GET['status'] : '';
 $filter_user   = isset($_GET['user']) ? $_GET['user'] : '';
 
@@ -23,7 +18,6 @@ if ($filter_user != '') {
     $where .= " AND p.id_user='$filter_user'";
 }
 
-// Query JOIN tabel peminjaman + users + buku - Modul 7
 $query_laporan = mysqli_query($konek, "
     SELECT p.*, u.nama as nama_user, u.username,
            b.judul as judul_buku, b.pengarang, b.kategori
@@ -34,10 +28,8 @@ $query_laporan = mysqli_query($konek, "
     ORDER BY p.id_pinjam DESC
 ");
 
-// Daftar user untuk filter
 $query_user_list = mysqli_query($konek, "SELECT * FROM users WHERE role='user' ORDER BY nama");
 
-// Statistik
 $total_semua    = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM peminjaman"));
 $total_pinjam   = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM peminjaman WHERE status='dipinjam'"));
 $total_kembali  = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM peminjaman WHERE status='dikembalikan'"));
@@ -53,7 +45,6 @@ include 'header.php';
 
 <div class="container fade-in">
 
-    <!-- Statistik -->
     <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom:24px;">
         <div class="stat-card">
             <div class="stat-icon">📋</div>
@@ -78,7 +69,6 @@ include 'header.php';
         </div>
     </div>
 
-    <!-- FILTER -->
     <div class="card mb-20">
         <div class="card-body">
             <form method="GET" action="laporan.php">
@@ -112,7 +102,6 @@ include 'header.php';
         </div>
     </div>
 
-    <!-- TABEL LAPORAN -->
     <div class="card">
         <div class="card-header flex-between" style="display:flex; align-items:center; justify-content:space-between;">
             <span>📋 Data Peminjaman</span>
@@ -141,7 +130,6 @@ include 'header.php';
                 $no = 1;
                 $ada = false;
 
-                // Modul 4 : Perulangan WHILE
                 while ($data = mysqli_fetch_array($query_laporan)) {
                     $ada = true;
 

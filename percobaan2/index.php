@@ -1,11 +1,7 @@
 <?php
-// =============================================
-// INDEX.PHP / LOGIN - Modul 6 : Session
-// =============================================
 session_start();
 include 'koneksi.php';
 
-// Jika sudah login, langsung ke dashboard
 if (isset($_SESSION['username'])) {
     header('Location: dashboard.php');
     exit();
@@ -13,19 +9,15 @@ if (isset($_SESSION['username'])) {
 
 $pesan = "";
 
-// Proses login - Modul 3 : Menerima masukan dari user
 if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Modul 7 : Query SELECT ke database
     $query = mysqli_query($konek, "SELECT * FROM users WHERE username='$username' AND password='$password'");
     $cek = mysqli_num_rows($query);
 
-    // Modul 4 : Percabangan IF-ELSE
     if ($cek > 0) {
         $data = mysqli_fetch_array($query);
-        // Session - Modul 6
         $_SESSION['username'] = $data['username'];
         $_SESSION['nama']     = $data['nama'];
         $_SESSION['role']     = $data['role'];

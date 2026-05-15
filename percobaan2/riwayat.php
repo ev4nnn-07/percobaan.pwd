@@ -1,8 +1,4 @@
 <?php
-// =============================================
-// RIWAYAT.PHP - Riwayat Peminjaman User
-// Modul 7 : Akses Database SELECT
-// =============================================
 session_start();
 include 'koneksi.php';
 
@@ -18,7 +14,6 @@ if ($_SESSION['role'] != 'user') {
 $id_user = $_SESSION['id_user'];
 $pesan_url = isset($_GET['pesan']) ? $_GET['pesan'] : '';
 
-// Ambil semua riwayat peminjaman - Modul 7
 $query_riwayat = mysqli_query($konek, "
     SELECT p.*, b.judul, b.pengarang, b.kategori
     FROM peminjaman p
@@ -27,7 +22,6 @@ $query_riwayat = mysqli_query($konek, "
     ORDER BY p.id_pinjam DESC
 ");
 
-// Hitung statistik pribadi
 $total_pinjam   = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM peminjaman WHERE id_user='$id_user'"));
 $masih_pinjam   = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM peminjaman WHERE id_user='$id_user' AND status='dipinjam'"));
 $sudah_kembali  = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM peminjaman WHERE id_user='$id_user' AND status='dikembalikan'"));
@@ -47,7 +41,6 @@ include 'header.php';
         <div class="alert alert-success">✅ Buku berhasil dikembalikan. Terima kasih!</div>
     <?php } ?>
 
-    <!-- Statistik pribadi -->
     <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom:24px;">
         <div class="stat-card">
             <div class="stat-icon">📚</div>
@@ -94,7 +87,6 @@ include 'header.php';
                 $no = 1;
                 $ada = false;
 
-                // Modul 4 : Perulangan WHILE
                 while ($data = mysqli_fetch_array($query_riwayat)) {
                     $ada = true;
 

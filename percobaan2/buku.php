@@ -1,7 +1,4 @@
 <?php
-// =============================================
-// BUKU.PHP - Koleksi & Pencarian Buku
-// Modul 5 : Query SELECT + Modul 3 : GET POST
 session_start();
 include 'koneksi.php';
 
@@ -10,11 +7,9 @@ if (empty($_SESSION['username'])) {
     exit();
 }
 
-// Pencarian buku - Modul 3 : Menerima input dari user (GET)
 $cari  = isset($_GET['cari'])  ? $_GET['cari']  : '';
 $kategori_filter = isset($_GET['kategori']) ? $_GET['kategori'] : '';
 
-// Modul 4 : Percabangan untuk membangun query
 $where = "WHERE 1=1";
 if ($cari != '') {
     $where .= " AND (judul LIKE '%$cari%' OR pengarang LIKE '%$cari%' OR penerbit LIKE '%$cari%')";
@@ -26,7 +21,6 @@ if ($kategori_filter != '') {
 $query_buku = mysqli_query($konek, "SELECT * FROM buku $where ORDER BY judul ASC");
 $total_hasil = mysqli_num_rows($query_buku);
 
-// Ambil semua kategori untuk filter - Modul 4 : Array
 $query_kat = mysqli_query($konek, "SELECT DISTINCT kategori FROM buku ORDER BY kategori");
 $kategori_list = array();
 while ($k = mysqli_fetch_array($query_kat)) {
@@ -44,7 +38,6 @@ include 'header.php';
 
 <div class="container fade-in">
 
-    <!-- SEARCH BAR - Modul 1 : Form HTML -->
     <div class="card mb-20">
         <div class="card-body">
             <form method="GET" action="buku.php">
@@ -84,7 +77,6 @@ include 'header.php';
         </div>
     <?php } ?>
 
-    <!-- GRID BUKU -->
     <?php if ($total_hasil > 0) { ?>
         <div class="buku-grid">
         <?php
@@ -97,7 +89,6 @@ include 'header.php';
             $emoji = $emoji_buku[$i % 5];
             $i++;
 
-            // Modul 4 : Percabangan untuk stok
             if ($buku['stok'] > 0) {
                 $stok_info = "Stok: " . $buku['stok'];
                 $stok_warna = "";
